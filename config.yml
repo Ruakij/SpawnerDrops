@@ -1,4 +1,10 @@
 
+# Permissions:
+# - spawnerDrops.admin  (allows placing of spawners)
+
+# Necessary permission:
+# - minecraft.nbt.place  (allows placing block with NBT-data, not necessary if you keep the custom item-name)
+
 
 break:
   # Prerequisites for breaking a spawner from different sources
