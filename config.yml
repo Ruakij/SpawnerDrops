@@ -5,54 +5,55 @@ break:
   # If the prerequisite is not met, the event is canceled and the block stays where is is -> 'nothing' happens
   break-prerequisite:
     # 'unknown' means we dont know where the spawner came from (usually a generated one or e.g. using worldedit)
-    unknown:
+    UNKNOWN:
       # silktouch-enchantment is needed to be able to break this block
       # if set to false, any break is considered a 'success'
       silktouch: true
       # messages for success or failure
       msg:
         success: ''
-        fail: '§7§iNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+        fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
 
-    player:
+    PLAYER:
       silktouch: true
       success: ''
-      fail: '§7§iNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+      fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
 
-    admin:
+    ADMIN:
       silktouch: true
       success: ''
-      fail: '§7§iNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+      fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
 
 
   # Prerequisites for a successful drop of the spawner-item AFTER (and only if) it was broken
   # (if a player can break it, but the drop prerequisite is not met, the block is broken, but not item will drop -> Its lost)
   drop-prerequisite:
 
-    unknown:
+    UNKNOWN:
       silktouch: true
       msg:
-        success: '§7§iThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
-        fail: '§7§i*Poof* The spawner breaks into many pieces and is lost'
+        success: '§7§oThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
+        fail: '§7§o*Poof* The spawner breaks into many pieces and is lost'
 
-    player:
+    PLAYER:
       silktouch: true
       msg:
         success: ''
-        fail: '§7§i*Poof* The spawner breaks into many pieces and is lost'
+        fail: '§7§o*Poof* The spawner breaks into many pieces and is lost'
 
-    admin:
+    ADMIN:
       silktouch: true
       msg:
-        success: '§7§iThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
-        fail: '§7§i*Poof* The spawner breaks into many pieces and is lost'
+        success: '§7§oThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
+        fail: '§7§o*Poof* The spawner breaks into many pieces and is lost'
 
 
 place:
-  player:
+  PLAYER:
     canPlace: true
     msg:
       success: ''
-      fail: '§7§iNothing happened.. You dont seem to be able to place spawners'
-  admin:
-    msg: '§7§iMineable spawner placed'
+      fail: '§7§oNothing happened.. You dont seem to be able to place spawners'
+  ADMIN:
+    msg:
+      success: '§7§oMineable spawner placed'
