@@ -42,7 +42,7 @@ public class Main extends JavaPlugin {
         config = this.getConfig();
 
         try{
-            File dataFile = new File("data.yml");
+            File dataFile = new File("plugins/SpawnerDrops/data.yml");
             dataFile.createNewFile();
             data = YamlConfiguration.loadConfiguration(
                     dataFile
