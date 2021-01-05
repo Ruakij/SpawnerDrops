@@ -27,6 +27,10 @@ break:
         fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
 
 
+  drop:
+    item:
+      name: '{mob-type}-Spawner'
+
   # Prerequisites for a successful drop of the spawner-item AFTER (and only if) it was broken
   # (if a player can break it, but the drop prerequisite is not met, the block is broken, but not item will drop -> Its lost)
   drop-prerequisite:

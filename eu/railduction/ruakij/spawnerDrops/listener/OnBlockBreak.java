@@ -89,12 +89,15 @@ public class OnBlockBreak implements Listener {
 
                 // Set drop
                 if(success){
+                    ConfigurationSection dropConfig = Main.config.getConfigurationSection("break.drop");
+
                     ItemStack item = new ItemStack(Material.MOB_SPAWNER);
 
                     CreatureSpawner cs = (CreatureSpawner)e.getBlock().getState();
 
                     BlockStateMeta bsm = (BlockStateMeta)item.getItemMeta();
                     bsm.setBlockState(cs);
+                    bsm.setDisplayName(dropConfig.getString("item.name").replace("{mob-type}", cs.getSpawnedType().name()));
                     item.setItemMeta(bsm);
 
                     loc.getWorld().dropItem(loc, item);
