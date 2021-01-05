@@ -16,13 +16,15 @@ break:
 
     PLAYER:
       silktouch: true
-      success: ''
-      fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+      msg:
+        success: ''
+        fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
 
     ADMIN:
       silktouch: true
-      success: ''
-      fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+      msg:
+        success: ''
+        fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
 
 
   # Prerequisites for a successful drop of the spawner-item AFTER (and only if) it was broken
