@@ -35,7 +35,6 @@ public class OnBlockPlace implements Listener {
             }
 
             // Write place-data
-            Main.plugin.getLogger().info(Main.serialiseLocation(loc) +" - "+ isAdmin);
             Main.data.set(Main.serialiseLocation(loc), isAdmin);
 
             try {
