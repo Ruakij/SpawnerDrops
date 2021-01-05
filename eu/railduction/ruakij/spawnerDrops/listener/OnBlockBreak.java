@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
 import java.io.IOException;
+import java.util.List;
 
 public class OnBlockBreak implements Listener {
 
@@ -45,14 +46,29 @@ public class OnBlockBreak implements Listener {
 
                 // # Break-Prerequisite
                 ConfigurationSection breakPreConfig = Main.config.getConfigurationSection("break.break-prerequisite."+ bSource);
-                boolean success = false;
-                // Silktouch
-                if(breakPreConfig.getBoolean("silktouch")){
-                    if(p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH))
-                        success = true;
-                    else
-                        e.setCancelled(true);
+                boolean success = true;
+                // Allowed-items
+                List<String> allowed_items = (List<String>) breakPreConfig.getList("allowed-items");
+                if(allowed_items != null){
+                    boolean found = false;
+                    for(String allowed_item : allowed_items){
+                        if(p.getItemInHand().getType().name().equalsIgnoreCase(allowed_item)){
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found) success = false;
                 }
+
+                // Silktouch
+                if(success && breakPreConfig.getBoolean("silktouch")){
+                    if(!p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH)){
+                        success = false;
+                    }
+                }
+
+                if(!success) e.setCancelled(true);
+
                 // Send msg
                 String msg = breakPreConfig.getString("msg."+ (success?"success":"fail"));
                 if(msg != null && !msg.equals("")) p.sendMessage(msg);
@@ -78,14 +94,29 @@ public class OnBlockBreak implements Listener {
 
                 // # Drop-Prerequisite
                 ConfigurationSection dropPreConfig = Main.config.getConfigurationSection("break.drop-prerequisite."+ bSource);
-                boolean success = false;
-                // Silktouch
-                if(dropPreConfig.getBoolean("silktouch")){
-                    if(p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH))
-                        success = true;
-                    else
-                        e.setCancelled(true);
+                boolean success = true;
+                // Allowed-items
+                List<String> allowed_items = (List<String>) dropPreConfig.getList("allowed-items");
+                if(allowed_items != null){
+                    boolean found = false;
+                    for(String allowed_item : allowed_items){
+                        if(p.getItemInHand().getType().name().equalsIgnoreCase(allowed_item)){
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found) success = false;
                 }
+
+                // Silktouch
+                if(success && dropPreConfig.getBoolean("silktouch")){
+                    if(!p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH)){
+                        e.setCancelled(true);
+                        success = false;
+                    }
+                }
+
+                if(!success) e.setCancelled(true);
 
                 // Set drop
                 if(success){

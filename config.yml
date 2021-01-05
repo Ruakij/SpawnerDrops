@@ -6,25 +6,32 @@ break:
   break-prerequisite:
     # 'unknown' means we dont know where the spawner came from (usually a generated one or e.g. using worldedit)
     UNKNOWN:
+      # Which items are allowed to break a spawner (null to allow everything)
+      allowed-items:
+        - 'diamond_pickaxe'
       # silktouch-enchantment is needed to be able to break this block
-      # if set to false, any break is considered a 'success'
+      # if everything is set to false, any break is considered a 'success'
       silktouch: true
       # messages for success or failure
       msg:
         success: ''
-        fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+        fail: '§7§oNothing happens, it seems you need a diamond-pickaxe with silktouch'
 
     PLAYER:
+      allowed-items:
+        - 'diamond_pickaxe'
       silktouch: true
       msg:
         success: ''
-        fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+        fail: '§7§oNothing happens, it seems you need a diamond-pickaxe with silktouch'
 
     ADMIN:
+      allowed-items:
+        - 'diamond_pickaxe'
       silktouch: true
       msg:
         success: ''
-        fail: '§7§oNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+        fail: '§7§oNothing happens, it seems you need a diamond-pickaxe with silktouch'
 
 
   drop:
@@ -36,18 +43,24 @@ break:
   drop-prerequisite:
 
     UNKNOWN:
+      allowed-items:
+        - 'diamond_pickaxe'
       silktouch: true
       msg:
         success: '§7§oThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
         fail: '§7§o*Poof* The spawner breaks into many pieces and is lost'
 
     PLAYER:
+      allowed-items:
+        - 'diamond_pickaxe'
       silktouch: true
       msg:
         success: ''
         fail: '§7§o*Poof* The spawner breaks into many pieces and is lost'
 
     ADMIN:
+      allowed-items:
+        - 'diamond_pickaxe'
       silktouch: true
       msg:
         success: '§7§oThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
