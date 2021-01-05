@@ -1,5 +1,6 @@
 package eu.railduction.ruakij.spawnerDrops;
 
+import eu.railduction.ruakij.spawnerDrops.listener.OnBlockBreak;
 import eu.railduction.ruakij.spawnerDrops.listener.OnBlockPlace;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,6 +20,7 @@ public class Main extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new OnBlockPlace(), this);
+        pluginManager.registerEvents(new OnBlockBreak(), this);
 
         loadConfigs();
 
