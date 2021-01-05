@@ -1,0 +1,58 @@
+
+
+break:
+  # Prerequisites for breaking a spawner from different sources
+  # If the prerequisite is not met, the event is canceled and the block stays where is is -> 'nothing' happens
+  break-prerequisite:
+    # 'unknown' means we dont know where the spawner came from (usually a generated one or e.g. using worldedit)
+    unknown:
+      # silktouch-enchantment is needed to be able to break this block
+      # if set to false, any break is considered a 'success'
+      silktouch: true
+      # messages for success or failure
+      msg:
+        success: ''
+        fail: '§7§iNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+
+    player:
+      silktouch: true
+      success: ''
+      fail: '§7§iNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+
+    admin:
+      silktouch: true
+      success: ''
+      fail: '§7§iNothing happens, it seems you cannot break the spawner without the Silktouch-enchantment'
+
+
+  # Prerequisites for a successful drop of the spawner-item AFTER (and only if) it was broken
+  # (if a player can break it, but the drop prerequisite is not met, the block is broken, but not item will drop -> Its lost)
+  drop-prerequisite:
+
+    unknown:
+      silktouch: true
+      msg:
+        success: '§7§iThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
+        fail: '§7§i*Poof* The spawner breaks into many pieces and is lost'
+
+    player:
+      silktouch: true
+      msg:
+        success: ''
+        fail: '§7§i*Poof* The spawner breaks into many pieces and is lost'
+
+    admin:
+      silktouch: true
+      msg:
+        success: '§7§iThe spawner breaks with a loud *Pop* and falls to the ground to be picked up'
+        fail: '§7§i*Poof* The spawner breaks into many pieces and is lost'
+
+
+place:
+  player:
+    canPlace: true
+    msg:
+      success: ''
+      fail: '§7§iNothing happened.. You dont seem to be able to place spawners'
+  admin:
+    msg: '§7§iMineable spawner placed'
