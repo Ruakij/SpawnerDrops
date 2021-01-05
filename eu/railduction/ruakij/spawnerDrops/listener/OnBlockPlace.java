@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import java.io.IOException;
+
 public class OnBlockPlace implements Listener {
 
     public void onBlockPlaceEvent(BlockPlaceEvent e){
@@ -30,6 +32,12 @@ public class OnBlockPlace implements Listener {
             else{
                 // Write place-data
                 Main.data.set(Main.serialiseLocation(loc), isAdmin);
+                try {
+                    Main.data.save("data.yml");
+                } catch (IOException ex) {
+                    Main.plugin.getLogger().severe("Cannot save data to data.yml! Data will lost after restart!");
+                    ex.printStackTrace();
+                }
 
                 // Send msg
                 String msg = Main.config.getString("place.player.msg.success");

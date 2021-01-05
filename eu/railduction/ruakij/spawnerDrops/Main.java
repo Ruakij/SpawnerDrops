@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,10 +14,14 @@ import java.io.File;
 
 public class Main extends JavaPlugin {
 
+    public static Plugin plugin;
+
     public static FileConfiguration config;
     public static FileConfiguration data;
 
     public void onEnable() {
+
+        plugin = this;
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new OnBlockPlace(), this);
