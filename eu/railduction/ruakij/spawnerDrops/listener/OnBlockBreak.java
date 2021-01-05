@@ -5,6 +5,7 @@ import eu.railduction.ruakij.spawnerDrops.Main;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 
 import java.io.IOException;
 
@@ -88,6 +90,13 @@ public class OnBlockBreak implements Listener {
                 // Set drop
                 if(success){
                     ItemStack item = new ItemStack(Material.MOB_SPAWNER);
+
+                    CreatureSpawner cs = (CreatureSpawner)e.getBlock().getState();
+
+                    BlockStateMeta bsm = (BlockStateMeta)item.getItemMeta();
+                    bsm.setBlockState(cs);
+                    item.setItemMeta(bsm);
+
                     loc.getWorld().dropItem(loc, item);
                 }
 
