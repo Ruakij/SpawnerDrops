@@ -45,7 +45,7 @@ break:
       name: '{mob-type}-Spawner'
 
   # Prerequisites for a successful drop of the spawner-item AFTER (and only if) it was broken
-  # (if a player can break it, but the drop prerequisite is not met, the block is broken, but not item will drop -> Its lost)
+  # (if a player can break it, but the drop prerequisite is not met, the block is broken, but no item will drop -> Its lost)
   drop-prerequisite:
 
     UNKNOWN:
