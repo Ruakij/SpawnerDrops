@@ -128,7 +128,13 @@ public class OnBlockBreak implements Listener {
 
                     BlockStateMeta bsm = (BlockStateMeta)item.getItemMeta();
                     bsm.setBlockState(cs);
-                    bsm.setDisplayName(dropConfig.getString("item.name").replace("{mob-type}", cs.getSpawnedType().name()));
+
+                    String item_name_conf = dropConfig.getString("item.name");
+                    if(item_name_conf != null && item_name_conf != ""){
+                        String mobTypeName = Main.stringHumanReadable(cs.getSpawnedType().name());
+                        bsm.setDisplayName(dropConfig.getString("item.name").replace("{mob-type}", mobTypeName));
+                    }
+
                     item.setItemMeta(bsm);
 
                     e.getBlock().setType(Material.AIR);

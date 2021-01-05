@@ -57,4 +57,21 @@ public class Main extends JavaPlugin {
     public static String serialiseLocation(Location loc){
         return loc.getWorld().getName()+";"+loc.getBlockX()+";"+loc.getBlockY()+";"+loc.getBlockZ();
     }
+
+    public static String stringHumanReadable(String str){
+
+        str = str.replace("_", " ");
+        String[] strData = str.split(" ");
+        str = "";
+        for (int i = 0; i < strData.length; i++) {
+            String tmpStr = strData[i].substring(0, 1).toUpperCase();
+            strData[i] = tmpStr + strData[i].substring(1).toLowerCase();
+
+            str += strData[i];
+            if(i < strData.length-1)
+                str += " ";
+        }
+
+        return str;
+    }
 }
