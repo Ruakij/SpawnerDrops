@@ -47,9 +47,14 @@ public class OnBlockBreak implements Listener {
                 // # Break-Prerequisite
                 ConfigurationSection breakPreConfig = Main.config.getConfigurationSection("break.break-prerequisite."+ bSource);
                 boolean success = true;
+
+                // CanBreak
+                if(!breakPreConfig.getBoolean("canBreak"))
+                    success = false;
+
                 // Allowed-items
                 List<String> allowed_items = (List<String>) breakPreConfig.getList("allowed-items");
-                if(allowed_items != null){
+                if(success && allowed_items != null){
                     boolean found = false;
                     for(String allowed_item : allowed_items){
                         if(p.getItemInHand().getType().name().equalsIgnoreCase(allowed_item)){
@@ -95,6 +100,11 @@ public class OnBlockBreak implements Listener {
                 // # Drop-Prerequisite
                 ConfigurationSection dropPreConfig = Main.config.getConfigurationSection("break.drop-prerequisite."+ bSource);
                 boolean success = true;
+
+                // WillDrop
+                if(!dropPreConfig.getBoolean("willDrop"))
+                    success = false;
+
                 // Allowed-items
                 List<String> allowed_items = (List<String>) dropPreConfig.getList("allowed-items");
                 if(allowed_items != null){
