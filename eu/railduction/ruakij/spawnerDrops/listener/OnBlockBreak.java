@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.io.IOException;
 
 public class OnBlockBreak implements Listener {
 
@@ -21,46 +24,77 @@ public class OnBlockBreak implements Listener {
         Player p = e.getPlayer();
 
         if(e.getBlock().getType() == Material.MOB_SPAWNER){
-            // Allow creative
-            if(p.getGameMode() == GameMode.CREATIVE)
-                return;
+            Location loc = e.getBlock().getLocation();
+            String locSer = Main.serialiseLocation(loc);
 
             // Get spawner-source (unknown, player, admin)
-            Location loc = e.getBlock().getLocation();
             BlockSource bSource;
-            Boolean placedByAdmin = Main.data.getBoolean(Main.serialiseLocation(loc));
+            Object placedByAdmin = Main.data.get(locSer);
             if(placedByAdmin == null)
                 bSource = BlockSource.UNKNOWN;
             else
-                if(!placedByAdmin)
-                    bSource = BlockSource.PLAYER;
-                else
-                    bSource = BlockSource.ADMIN;
+            if(!(boolean)placedByAdmin)
+                bSource = BlockSource.PLAYER;
+            else
+                bSource = BlockSource.ADMIN;
 
-            // # Break-Prerequisite
-            ConfigurationSection breakPreConfig = Main.config.getConfigurationSection("break.break-prerequisite."+ bSource);
-            // Silktouch
-            if(breakPreConfig.getBoolean("silktouch")){
-                if(!p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH))
-                    e.setCancelled(true);
+            // Ignore creative
+            if(p.getGameMode() != GameMode.CREATIVE){
+
+                // # Break-Prerequisite
+                ConfigurationSection breakPreConfig = Main.config.getConfigurationSection("break.break-prerequisite."+ bSource);
+                boolean success = false;
+                // Silktouch
+                if(breakPreConfig.getBoolean("silktouch")){
+                    if(p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH))
+                        success = true;
+                    else
+                        e.setCancelled(true);
+                }
+                // Send msg
+                String msg = breakPreConfig.getString("msg."+ (success?"success":"fail"));
+                if(msg != null && !msg.equals("")) p.sendMessage(msg);
+
+                // Stop if breaking wasnt successful
+                if(!success) return;
             }
-            // Send msg
-            String msg = breakPreConfig.getString("msg."+ (e.isCancelled()?"fail":"success"));
-            if(msg != null && !msg.equals("")) p.sendMessage(msg);
 
 
-            if(e.isCancelled()) return;
-
-            // # Drop-Prerequisite
-            ConfigurationSection dropPreConfig = Main.config.getConfigurationSection("break.drop-prerequisite."+ bSource);
-            // Silktouch
-            if(breakPreConfig.getBoolean("silktouch")){
-                if(!p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH))
-                    e.setDropItems(false);
+            // Remove block from data
+            if(bSource != BlockSource.UNKNOWN){
+                Main.data.set(locSer, null);
+                try {
+                    Main.data.save("data.yml");
+                } catch (IOException ex) {
+                    Main.plugin.getLogger().severe("Cannot save data to data.yml! Data will lost after restart!");
+                    ex.printStackTrace();
+                }
             }
-            // Send msg
-            msg = dropPreConfig.getString("msg."+ (e.isDropItems()?"success":"fail"));
-            if(msg != null && !msg.equals("")) p.sendMessage(msg);
+
+            // Ignore creative
+            if(p.getGameMode() != GameMode.CREATIVE){
+
+                // # Drop-Prerequisite
+                ConfigurationSection dropPreConfig = Main.config.getConfigurationSection("break.drop-prerequisite."+ bSource);
+                boolean success = false;
+                // Silktouch
+                if(dropPreConfig.getBoolean("silktouch")){
+                    if(p.getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH))
+                        success = true;
+                    else
+                        e.setCancelled(true);
+                }
+
+                // Set drop
+                if(success){
+                    ItemStack item = new ItemStack(Material.MOB_SPAWNER);
+                    loc.getWorld().dropItem(loc, item);
+                }
+
+                // Send msg
+                String msg = dropPreConfig.getString("msg."+ (success?"success":"fail"));
+                if(msg != null && !msg.equals("")) p.sendMessage(msg);
+            }
         }
     }
 }
