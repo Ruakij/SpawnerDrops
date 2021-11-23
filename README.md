@@ -2,7 +2,7 @@
 
 Bukkit-Plugin for Spawner Place&Block configs.
 Can differenciate between generated and placed blocks by admins or users.
-Suports custom messages for all actions.
+Supports custom messages for all actions.
 
 <br>
 
